@@ -9,6 +9,7 @@ defmodule TableSupervisorFour do
   def init(_arg) do
     # Initialize children here
     children = [
+<<<<<<< HEAD:lib/table_supervisor_four.ex
       %{
         id: :five021M,
         start: {TableServerFive, :start_link, [0, :five021M]}
