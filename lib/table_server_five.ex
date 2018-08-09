@@ -38,4 +38,13 @@ defmodule TableServerFive do
   def handle_call(:pong, _from, current_number) do
     {:reply, {:ok, current_number}, current_number + 1}
   end
+
+  defp global_server_name(server_name) do
+    {:global, {:servername, server_name}}
+  end
+
+  defp try_call(server_name, message) do
+    # use GenServer.whereis to find the global server name
+    # if the server isn't found, return an error
+  end
 end
