@@ -5,22 +5,26 @@ defmodule TableServerTwo do
   # Client - API                              #
   # i.e. Client calls the following functions #
   # ----------------------------------------- #
+  @impl true
   def start_link(_) do
-    # insert start_link call here
+    GenServer.start_link(__MODULE__, [])
   end
 
+  @impl true
   def init(args) do
     {:ok, args}
   end
 
+  @impl true
   def ping() do
-    # insert callback here
+    {:ok}
   end
 
   # ----------------------------------------- #
   # Server - API                              #
   # i.e. Server calls the following functions #
   # ----------------------------------------- #
+  @impl true
   def handle_call(:ping, _from, []) do
     {:reply, {:ok}, []}
   end
