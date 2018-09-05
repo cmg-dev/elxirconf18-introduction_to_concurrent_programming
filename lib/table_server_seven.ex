@@ -5,14 +5,13 @@ defmodule TableServerSeven do
   # Client - API                              #
   # i.e. Client calls the following functions #
   # ----------------------------------------- #
-  def start_link(start_number, server_name) do
-    # Need to handle both a start_number and an end_number
-    GenServer.start_link(__MODULE__, start_number, name: global_server_name(server_name))
+  def start_link([start, final], server_name) do
+    GenServer.start_link(__MODULE__, [start, final], name: global_server_name(server_name))
   end
 
-  def init(start_number) do
+  def init([start, final]) do
     # Need to handle both a start_number and an end_number
-    {:ok, start_number}
+    {:ok, [start, final]}
   end
 
   def stop(server_name) do
@@ -31,14 +30,30 @@ defmodule TableServerSeven do
   # Server - API                              #
   # i.e. Server calls the following functions #
   # ----------------------------------------- #
-  def handle_call(:ping, _from, current_number) do
-    # Need to handle both a start_number and an end_number
-    {:reply, {:ok, current_number}, current_number + 1}
+  def handle_call(:ping, _from, state) do
+    [current, final] = state
+    final_reached = final - current
+    case final_reached do
+      0 ->
+        new_state = [current, final]
+        {:reply, {:ok, current}, new_state}
+      _ ->
+        new_state = [current + 1, final]
+        {:reply, {:ok, current}, new_state}
+    end
   end
 
-  def handle_call(:pong, _from, current_number) do
-    # Need to handle both a start_number and an end_number
-    {:reply, {:ok, current_number}, current_number + 1}
+  def handle_call(:pong, _from, state) do
+    [current, final] = state
+    final_reached = final - current
+    case final_reached do
+      0 ->
+        new_state = [current, final]
+        {:reply, {:ok, current}, new_state}
+      _ ->
+        new_state = [current + 1, final]
+        {:reply, {:ok, current}, new_state}
+    end
   end
 
   defp global_server_name(server_name) do

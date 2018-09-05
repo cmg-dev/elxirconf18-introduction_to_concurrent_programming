@@ -8,9 +8,14 @@ defmodule TableSupervisorSeven do
 
   def init(_arg) do
     children = [
-      # introduce two child processes
-      # 1. count from 0 to 1 million
-      # 2. count from 1 million to 2 million
+      %{
+        id: :seven021M,
+        start: {TableServerSeven, :start_link, [[0, 10], :seven021M]}
+      },
+      %{
+        id: :seven122M,
+        start: {TableServerSeven, :start_link, [[1_000_000, 2_000_000], :seven122M]}
+      }
     ]
 
     # Now we start the supervisor with the children and a strategy

@@ -3,8 +3,8 @@ defmodule TableServerSevenTest do
 
   setup do
     {:ok, server_pid} = TableServerSeven.start_link([10, 12], :seven021M)
-    :sys.statistics(server_pid, true)
-    :sys.trace(server_pid, true)
+    # :sys.statistics(server_pid, true)
+    # :sys.trace(server_pid, true)
 
     {:ok, server: server_pid}
   end
