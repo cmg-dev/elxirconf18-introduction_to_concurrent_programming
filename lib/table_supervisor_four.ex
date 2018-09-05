@@ -8,7 +8,14 @@ defmodule TableSupervisorFour do
 
   def init(_arg) do
     # Initialize children here
+    children = [
+      %{
+        id: TableServerFour,
+        start:  {TableServerFour, :start_link, [0]}
+      }
+    ]
 
     # Now we start the supervisor with the children and a strategy
+    Supervisor.init(children, strategy: :one_for_one)
   end
 end
