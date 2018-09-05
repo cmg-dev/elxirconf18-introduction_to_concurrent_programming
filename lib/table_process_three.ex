@@ -1,18 +1,21 @@
 defmodule TableProcessThree do
   def ping do
     receive do
-      # Receive a ping, send a pong
+      {caller, :ping} -> send(caller, {self(), :pong})
     end
 
     ping()
   end
 
   def pong do
-    # Receive a pong, send a ping
+    receive do
+      {caller, :pong} -> send(caller, {self(), :ping})
+    end
+    pong()
   end
 
   def start do
     # spawn two processes and return both process ids
-    spawn(__MODULE__, :ping, [])
+    {spawn(__MODULE__, :ping, []), spawn(__MODULE__, :pong, [])}
   end
 end
