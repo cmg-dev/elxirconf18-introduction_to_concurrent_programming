@@ -6,8 +6,9 @@ defmodule TableServerFive do
   # i.e. Client calls the following functions #
   # ----------------------------------------- #
   def start_link(start_number, server_name) do
-    GenServer.start_link(__MODULE__, start_number, name: {:global, {:servername, server_name}})
+    GenServer.start_link(__MODULE__, start_number, name: global_server_name(server_name))
   end
+
 
   def init(start_number) do
     {:ok, start_number}
@@ -44,7 +45,12 @@ defmodule TableServerFive do
   end
 
   defp try_call(server_name, message) do
-    # use GenServer.whereis to find the global server name
-    # if the server isn't found, return an error
+    case GenServer.whereis(global_server_name(server_name)) do
+      nil ->
+        {:error, :invalid_server}
+
+      servername ->
+        GenServer.call(servername, message)
+    end
   end
 end
