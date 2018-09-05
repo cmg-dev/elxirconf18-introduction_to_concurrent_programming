@@ -3,7 +3,6 @@ defmodule TableServerThree do
 
   # ----------------------------------------- #
   # Client - API                              #
-  # i.e. Client calls the following functions #
   # ----------------------------------------- #
   def start_link(value) do
     GenServer.start_link(__MODULE__, value, name: __MODULE__)
@@ -23,7 +22,6 @@ defmodule TableServerThree do
 
   # ----------------------------------------- #
   # Server - API                              #
-  # i.e. Server calls the following functions #
   # ----------------------------------------- #
   def handle_call(:ping, _from, current_number) do
     {:reply, {:ok, current_number}, current_number}
