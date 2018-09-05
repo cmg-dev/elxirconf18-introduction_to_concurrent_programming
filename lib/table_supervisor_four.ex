@@ -9,10 +9,13 @@ defmodule TableSupervisorFour do
   def init(_arg) do
     # Initialize children here
     children = [
-<<<<<<< HEAD:lib/table_supervisor_four.ex
       %{
-        id: :five021M,
-        start: {TableServerFive, :start_link, [0, :five021M]}
+        id: :seven021M,
+        start: {TableServerSeven, :start_link, [[0, 10], :seven021M]}
+      },
+      %{
+        id: :seven122M,
+        start: {TableServerSeven, :start_link, [[1_000_000, 2_000_000], :seven122M]}
       }
     ]
 
