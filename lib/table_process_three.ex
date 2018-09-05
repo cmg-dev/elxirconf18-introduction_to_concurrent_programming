@@ -1,7 +1,17 @@
 defmodule TableProcessThree do
+  defp answer_pong(to) do
+    pong_message = {self(), :pong}
+    send(to, pong_message)
+  end
+
+  def answer_ping(to) do
+    ping_message = {self(), :ping}
+    send(to, ping_message), :ping})
+  end
+
   def ping do
     receive do
-      {caller, :ping} -> send(caller, {self(), :pong})
+      {caller, :ping} -> answer_pong(caller)
     end
 
     ping()
@@ -9,7 +19,7 @@ defmodule TableProcessThree do
 
   def pong do
     receive do
-      {caller, :pong} -> send(caller, {self(), :ping})
+      {caller, :pong} -> answer_ping(caller)
     end
     pong()
   end
