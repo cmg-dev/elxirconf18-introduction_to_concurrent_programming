@@ -1,9 +1,11 @@
 defmodule TableProcessOne do
-  def ping do
-    # insert receive(args) here
+  def ping() do
+    receive do
+      :ping -> {:ok}
+    end
   end
 
   def start do
-    # insert spawn(fun) here
+    spawn fn -> ping() end
   end
 end
