@@ -6,7 +6,7 @@ defmodule TableProcessThree do
 
   def answer_ping(to) do
     ping_message = {self(), :ping}
-    send(to, ping_message), :ping})
+    send(to, ping_message)
   end
 
   def ping do
